@@ -14,10 +14,14 @@ public class ToDo {
     private boolean done;
     private Date date;
 
-    public ToDo(String description) {
-        setDescription(description);
+    public ToDo() {
         setDone(false);
         setDate(new Date());
+    }
+
+    public ToDo(String description) {
+        this();
+        setDescription(description);
     }
 
     public String getDescription() {

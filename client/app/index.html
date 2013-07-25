@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" ng-app>
+    <head>
+      <meta charset="utf-8">
+      <title>To Do List</title>
+      <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"/>
+      <link rel="stylesheet" href="css/app.css"/>
+    </head>
+    <body ng-controller="ToDoListCtrl">
+      <div class="container-fluid">
+          <div class="row-fluid">
+              <h1 class="text-info">To do:</h1>
+          </div>
+          <div class="row-fluid">
+              <table class="todo-table table table-striped">
+                  <tbody>
+                      <tr ng-repeat="todo in todos">
+                          <td>
+                              <input type="checkbox" ng-model="todo.done" />
+                          </td>
+                          <td>
+                              <span class="description-{{todo.done}}" ng-switch on="todo.done">
+                                  <span ng-switch-when="true">{{ todo.description }}</span>
+                                  <span ng-switch-when="false">
+                                      <input type="text" id="description" size="80" ng-model="todo.description"/>
+                                  </span>
+                              </span>
+                          </td>
+                          <td>
+                              <span class="date">{{ todo.date | date:'yyyy-MM-dd HH:mm:ss Z' }}</span>
+                          </td>
+                          <td>
+                              <input type="submit" value="Save" ng-click="updateToDo(todo)" />
+                              <input type="submit" value="Delete" ng-click="deleteToDo(todo)" />
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+              <div class="row-fluid">
+                  <form ng-submit="addToDo()">
+                      <input type="text" ng-model="todoText" size="50" placeholder="add new to do"/>
+                      <input class="btn-primary" type="submit" value="add"/>
+                  </form>
+              </div>
+          </div>
+      </div>
+
+      <script src="lib/angular/angular.js"></script>
+      <script src="js/app.js"></script>
+      <script src="js/services.js"></script>
+      <script src="js/controllers.js"></script>
+      <script src="js/filters.js"></script>
+      <script src="js/directives.js"></script>
+    </body>
+</html>

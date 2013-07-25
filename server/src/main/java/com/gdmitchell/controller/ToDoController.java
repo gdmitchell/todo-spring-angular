@@ -12,44 +12,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/todos")
 public class ToDoController {
     private List<ToDo> todos;
 
     public ToDoController() {
         todos = new ArrayList<ToDo>();
-        ToDo learnAngular = new ToDo("Learn Angular");
+        ToDo beAwesome = new ToDo(0, "Be awesome");
+        beAwesome.setDone(true);
+        todos.add(beAwesome);
+        ToDo learnAngular = new ToDo(1, "Learn Angular");
         todos.add(learnAngular);
-        ToDo makeSampleWebApp = new ToDo("Create a sample web app with Spring MVC and Angular");
+        ToDo makeSampleWebApp = new ToDo(2, "Create a sample web app with Spring MVC and Angular");
         todos.add(makeSampleWebApp);
     }
 
-    @RequestMapping(value = "/todos", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody List<ToDo> getAllToDos() {
         return todos;
     }
 
-    @RequestMapping(value = "/todos/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public void createToDo(@RequestBody ToDo toDo, HttpServletResponse response) {
         todos.add(toDo);
         response.setStatus(HttpServletResponse.SC_CREATED);
     }
 
-    @RequestMapping(value = "/todos/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public @ResponseBody ToDo getToDo(@PathVariable int id) {
         return todos.get(id);
     }
 
-    @RequestMapping(value = "/todos/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public void updateToDo(@PathVariable int id, @RequestBody ToDo toDo, HttpServletResponse response) {
-        ToDo updatedToDo = todos.get(id);
+        ToDo updatedToDo = todos.get(toDo.getId());
         updatedToDo.setDescription(toDo.getDescription());
         updatedToDo.setDate(toDo.getDate());
         updatedToDo.setDone(toDo.isDone());
         response.setStatus(HttpServletResponse.SC_NO_CONTENT);
     }
 
-    @RequestMapping(value = "/todos/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteToDo(@PathVariable int id, HttpServletResponse response) {
         todos.remove(id);
         response.setStatus(HttpServletResponse.SC_NO_CONTENT);

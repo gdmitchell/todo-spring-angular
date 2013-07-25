@@ -10,6 +10,7 @@ import java.util.Date;
  *         Time: 10:58 AM
  */
 public class ToDo {
+    private int id;
     private String description;
     private boolean done;
     private Date date;
@@ -19,9 +20,18 @@ public class ToDo {
         setDate(new Date());
     }
 
-    public ToDo(String description) {
+    public ToDo(int id, String description) {
         this();
+        setId(id);
         setDescription(description);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescription() {

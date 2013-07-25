@@ -19,7 +19,7 @@ function ToDoListCtrl($scope, $http) {
     }
 
     $scope.deleteToDo = function(todo) {
-        $scope.todos.remove(todo.id);
+        delete $scope.todos[$scope.todos.indexOf(todo)];
         $http.delete('http://localhost:8080/tsa-server/todos/' + todo.id);
     }
 }

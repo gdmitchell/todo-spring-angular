@@ -7,19 +7,30 @@ angular.module('tsaClient.controllers', ['tsaClient.services']).
             $scope.todos = data;
         });
 
+        $scope.getNextId = function() {
+            var maxId = 0;
+            for (var i = 0; i < $scope.todos.length; i++) {
+                var todoId = $scope.todos[i].id;
+                if (todoId > maxId) {
+                    maxId = todoId;
+                }
+            }
+            return ++maxId;
+        }
+
         $scope.addToDo = function() {
-            var newToDo = {id:$scope.todos.length, description:$scope.todoText, done:false, date:new Date()};
+            var newToDo = {id:$scope.getNextId(), description:$scope.todoText, done:false, date:new Date()};
             $scope.todos.push(newToDo);
-            ToDoService.createToDo({todo: newToDo});
+            ToDoService.createToDo(newToDo);
             $scope.todoText = '';
         }
 
         $scope.updateToDo = function(todo) {
-            ToDoService.updateToDo({todo: todo});
+            ToDoService.updateToDo(todo, {id: todo.id});
         }
 
         $scope.deleteToDo = function(todo) {
-            delete $scope.todos[$scope.todos.indexOf(todo)];
+            $scope.todos.splice($scope.todos.indexOf(todo), 1);
             ToDoService.deleteToDo({id: todo.id});
         }
 });

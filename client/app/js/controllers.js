@@ -16,22 +16,22 @@ angular.module('tsaClient.controllers', ['tsaClient.services']).
                 }
             }
             return ++maxId;
-        }
+        };
 
         $scope.updateToDo = function(todo) {
             ToDoService.update(todo);
-        }
+        };
 
         $scope.deleteToDo = function(todo) {
             $scope.todos.splice($scope.todos.indexOf(todo), 1);
             ToDoService.delete(todo);
-        }
+        };
 
         $scope.addToDoToList = function(todo) {
             $scope.todos.add(todo);
-        }
+        };
 
-        $scope.isSaveDisabled = function(id) {
+        $scope.isSaveDisabled = function() {
             return $scope.existingToDoForm.$invalid;
         }
 }).controller('AddToDoCtrl', function($scope, ToDoService) {
@@ -40,7 +40,7 @@ angular.module('tsaClient.controllers', ['tsaClient.services']).
             $scope.todos.push(newToDo);
             ToDoService.save(newToDo);
             $scope.todoText = '';
-        }
+        };
 
         $scope.isAddDisabled = function() {
             return $scope.addToDoForm.$invalid;

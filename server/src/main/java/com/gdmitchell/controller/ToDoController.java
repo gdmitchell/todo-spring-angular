@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class ToDoController {
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
-    public void createToDo(@RequestBody ToDo toDo) {
+    public void createToDo(@Valid @RequestBody ToDo toDo) {
         todos.add(toDo);
     }
 
@@ -45,7 +46,7 @@ public class ToDoController {
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public void updateToDo(@PathVariable int id, @RequestBody ToDo toDo) {
+    public void updateToDo(@PathVariable int id, @Valid @RequestBody ToDo toDo) {
         todos.remove(id);
         todos.add(id, toDo);
     }

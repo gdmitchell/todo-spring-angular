@@ -2,8 +2,8 @@
 
 /* Controllers */
 angular.module('tsaClient.controllers', ['tsaClient.services']).
-    controller('ToDoListCtrl', function($scope, $http, ToDoService) {
-        ToDoService.getToDos(function(data) {
+    controller('ToDoListCtrl', function($scope, ToDoService) {
+        ToDoService.query(function(data) {
             $scope.todos = data;
         });
 
@@ -18,19 +18,31 @@ angular.module('tsaClient.controllers', ['tsaClient.services']).
             return ++maxId;
         }
 
-        $scope.addToDo = function() {
-            var newToDo = {id:$scope.getNextId(), description:$scope.todoText, done:false, date:new Date()};
-            $scope.todos.push(newToDo);
-            ToDoService.createToDo(newToDo);
-            $scope.todoText = '';
-        }
-
         $scope.updateToDo = function(todo) {
-            ToDoService.updateToDo(todo, {id: todo.id});
+            ToDoService.update(todo);
         }
 
         $scope.deleteToDo = function(todo) {
             $scope.todos.splice($scope.todos.indexOf(todo), 1);
-            ToDoService.deleteToDo({id: todo.id});
+            ToDoService.delete(todo);
         }
-});
+
+        $scope.addToDoToList = function(todo) {
+            $scope.todos.add(todo);
+        }
+
+        $scope.isSaveDisabled = function(id) {
+            return $scope.existingToDoForm.$invalid;
+        }
+}).controller('AddToDoCtrl', function($scope, ToDoService) {
+        $scope.addToDo = function() {
+            var newToDo = {id:$scope.getNextId(), description:$scope.todoText, done:false, date:new Date()};
+            $scope.todos.push(newToDo);
+            ToDoService.save(newToDo);
+            $scope.todoText = '';
+        }
+
+        $scope.isAddDisabled = function() {
+            return $scope.addToDoForm.$invalid;
+        }
+    });

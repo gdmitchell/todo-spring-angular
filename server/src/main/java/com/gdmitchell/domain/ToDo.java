@@ -1,5 +1,8 @@
 package com.gdmitchell.domain;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.util.Date;
 
 /**
@@ -11,8 +14,13 @@ import java.util.Date;
  */
 public class ToDo {
     private int id;
+
+    @NotBlank
+    @Length(max = 100)
     private String description;
+
     private boolean done;
+
     private Date date;
 
     public ToDo() {

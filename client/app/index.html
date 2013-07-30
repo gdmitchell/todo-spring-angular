@@ -45,6 +45,9 @@
                   <input class="btn-primary" type="submit" value="add" ng-disabled="addToDoForm.$invalid"/>
               </form>
           </div>
+          <div class="row-fluid" ng-repeat="error in errors">
+              <span>{{ error }}</span>
+          </div>
       </div>
 
       <script src="lib/angular/angular.min.js"></script>

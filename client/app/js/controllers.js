@@ -3,9 +3,15 @@
 /* Controllers */
 angular.module('tsaClient.controllers', ['tsaClient.services']).
     controller('ToDoListCtrl', function($scope, ToDoService) {
-        ToDoService.query(function(data) {
-            $scope.todos = data;
-        });
+        ToDoService.query(
+            function(data) {
+                $scope.todos = data;
+            },
+
+            function(error) {
+                $scope.error = error;
+            }
+        );
 
         $scope.getNextId = function() {
             var maxId = 0;
@@ -27,22 +33,21 @@ angular.module('tsaClient.controllers', ['tsaClient.services']).
             ToDoService.delete(todo);
         };
 
-        $scope.addToDoToList = function(todo) {
-            $scope.todos.add(todo);
-        };
-
         $scope.isSaveDisabled = function() {
             return $scope.existingToDoForm.$invalid;
-        }
+        };
 }).controller('AddToDoCtrl', function($scope, ToDoService) {
         $scope.addToDo = function() {
             var newToDo = {id:$scope.getNextId(), description:$scope.todoText, done:false, date:new Date()};
-            $scope.todos.push(newToDo);
-            ToDoService.save(newToDo);
+            ToDoService.save(newToDo, function () {
+                $scope.todos.push(newToDo);
+            }, function(errorData) {
+                $scope.errors.push("this is an error message");
+            });
             $scope.todoText = '';
         };
 
         $scope.isAddDisabled = function() {
             return $scope.addToDoForm.$invalid;
-        }
+        };
     });

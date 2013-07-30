@@ -16,7 +16,7 @@ public class ToDo {
     private int id;
 
     @NotBlank
-    @Length(max = 100)
+    @Length(min = 3, max = 100)
     private String description;
 
     private boolean done;

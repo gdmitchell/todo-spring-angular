@@ -1,6 +1,5 @@
 package com.gdmitchell.domain;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.List;
 /**
  * @author gdmitchell
  */
-@XmlRootElement
 public class ErrorMessage {
     private List<String> errors;
 
